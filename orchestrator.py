@@ -213,6 +213,20 @@ def print_artifacts(state: SirclesState):
     debate = state.get("debate_record")
     if debate:
         print("\nDebate:")
+
+    if debate.escalated:
+        print(
+            f"  Position A: {debate.winner.agent_name} -> "
+            f"{debate.winner.recommendation.upper()} ({debate.winner.confidence:.2f})"
+        )
+        print(
+            f"  Position B: {debate.loser.agent_name} -> "
+            f"{debate.loser.recommendation.upper()} ({debate.loser.confidence:.2f})"
+        )
+        print(f"  Rule: {debate.resolution_rule}")
+        print(f"  Escalated: {debate.escalation_reason}")
+
+    else:
         print(
             f"  Winner: {debate.winner.agent_name} -> "
             f"{debate.winner.recommendation.upper()} ({debate.winner.confidence:.2f})"
@@ -221,9 +235,7 @@ def print_artifacts(state: SirclesState):
             f"  Loser:  {debate.loser.agent_name} -> "
             f"{debate.loser.recommendation.upper()} ({debate.loser.confidence:.2f})"
         )
-        print(f"  Rule:   {debate.resolution_rule}")
-        if debate.escalated:
-            print(f"  Escalated: {debate.escalation_reason}")
+        print(f"  Rule: {debate.resolution_rule}")
 
     outreach = state.get("outreach_draft")
     if outreach:
